@@ -20,7 +20,7 @@ body {
     <!-- Prostřední pole pro psaní -->
     <input type="text" id="vstup" style="font-family:cursive; font-size:20px; color:rgb(47, 74, 130)" placeholder="twitteraccount" ><br><br>
 
-    <button style="font-family:sans-serif; font-size:20px" onclick="generujCislo(); prepisText();">Zjisti jak moc je bottom</button><br><br>
+    <button style="font-family:sans-serif; font-size:20px" onclick="zpracujVstup(); prepisText();">Zjisti jak moc je bottom</button><br><br>
     
     <b id="tag" style="font-family:sans-serif; font-size:40px; color:rgb(214, 30, 57)"></b><b id="cil" style="font-family:sans-serif; font-size:40px; color:rgb(214, 30, 57)"></b>
     <b id="bottomrate" style="font-family:sans-serif; font-size:40px; color:rgb(214, 30, 57)"></b>
@@ -37,14 +37,22 @@ function prepisText() {
     document.getElementById("bottomPo").textContent = "% bottom";
 }
 
-function generujCislo() {
-    // vygeneruje číslo 0–100
-    let cislo = Math.floor(Math.random() * 101);
-    // zobrazí ho v odstavci
-    document.getElementById("bottomrate").textContent = "je z " + cislo + "% BOTTOM <3";
+
+
+function textNaCislo(text) {
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) {
+        hash = (hash * 31 + text.charCodeAt(i)) % 101; // 101 protože chceme 0–100
+    }
+    return hash;
+}
+
+function zpracujVstup() {
+    let vstup = document.getElementById("vstup").value;
+    let cislo = textNaCislo(vstup);
+    document.getElementById("bottomrate").textContent = "je z " + cislo + "% bottom";
 }
 
 </script>
 </body>
 </html>
-
